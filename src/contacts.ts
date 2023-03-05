@@ -2,9 +2,9 @@ import localforage from 'localforage';
 import { matchSorter } from 'match-sorter';
 import sortBy from 'sort-by';
 
-export async function getContacts(query?: string): Promise<Contact[]> {
+export async function getContacts(query?: string): Promise<ContactInfo[]> {
   await fakeNetwork(`getContacts:${query}`);
-  let contacts = await localforage.getItem<Contact[]>('contacts');
+  let contacts = await localforage.getItem<ContactInfo[]>('contacts');
   if (!contacts) contacts = [];
   if (query) {
     contacts = matchSorter(contacts, query, { keys: ['first', 'last'] });
@@ -12,7 +12,7 @@ export async function getContacts(query?: string): Promise<Contact[]> {
   return contacts.sort(sortBy('last', 'createdAt'));
 }
 
-export async function createContact(): Promise<Contact> {
+export async function createContact(): Promise<ContactInfo> {
   await fakeNetwork('');
   const id = Math.random().toString(36).substring(2, 9);
   const contact = { id, createdAt: Date.now() };
@@ -22,16 +22,16 @@ export async function createContact(): Promise<Contact> {
   return contact;
 }
 
-export async function getContact(id: string): Promise<Contact | null> {
+export async function getContact(id: string): Promise<ContactInfo | null> {
   await fakeNetwork(`contact:${id}`);
-  const contacts = await localforage.getItem('contacts') as Contact[];
+  const contacts = await localforage.getItem('contacts') as ContactInfo[];
   const contact = contacts.find(contact => contact.id === id);
   return contact ?? null;
 }
 
-export async function updateContact(id: string, updates: Contact): Promise<Contact> { // eslint-disable-line max-len
+export async function updateContact(id: string, updates: ContactInfo): Promise<ContactInfo> { // eslint-disable-line max-len
   await fakeNetwork('');
-  const contacts = await localforage.getItem('contacts') as Contact[];
+  const contacts = await localforage.getItem('contacts') as ContactInfo[];
   const contact = contacts.find(contact => contact.id === id);
   if (!contact) throw new Error('No contact found for ' + id);
   Object.assign(contact, updates);
@@ -40,7 +40,7 @@ export async function updateContact(id: string, updates: Contact): Promise<Conta
 }
 
 export async function deleteContact(id: string): Promise<boolean> {
-  const contacts = await localforage.getItem('contacts') as Contact[];
+  const contacts = await localforage.getItem('contacts') as ContactInfo[];
   const index = contacts.findIndex(contact => contact.id === id);
   if (index > -1) {
     contacts.splice(index, 1);
@@ -50,7 +50,7 @@ export async function deleteContact(id: string): Promise<boolean> {
   return false;
 }
 
-function set(contacts: Contact[]): Promise<Contact[]> {
+function set(contacts: ContactInfo[]): Promise<ContactInfo[]> {
   return localforage.setItem('contacts', contacts);
 }
 
@@ -73,9 +73,13 @@ async function fakeNetwork(key: string): Promise<void> {
   });
 }
 
-export interface Contact {
+export interface ContactInfo {
     id?: string;
     first?: string;
     last?: string;
+    avatar?: string;
+    twitter?: string;
+    notes?: string;
+    favorite?: boolean;
     createdAt?: number
 }
