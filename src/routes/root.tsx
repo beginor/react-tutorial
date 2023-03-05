@@ -25,6 +25,8 @@ export default function Root(): JSX.Element {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const searching = navigation.location && new URLSearchParams(navigation.location.search).has('1');
+
     useEffect(() => {
         if (!inputRef.current) {
             return;
@@ -40,6 +42,7 @@ export default function Root(): JSX.Element {
             <Form id="search-form" role="search">
               <input
                 id="q"
+                className={searching ? 'loading' : ''}
                 aria-label="Search contacts"
                 placeholder="Search"
                 type="search"
@@ -51,7 +54,7 @@ export default function Root(): JSX.Element {
               <div
                 id="search-spinner"
                 aria-hidden
-                hidden={true}
+                hidden={!searching}
               />
               <div
                 className="sr-only"
