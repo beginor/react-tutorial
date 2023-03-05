@@ -7,7 +7,7 @@ export async function loader({ params, request, context}: LoaderFunctionArgs): P
 }
 
 export default function Contact(): JSX.Element {
-  const contact = useLoaderData() as ContactInfo;
+  const { contact } = useLoaderData() as { contact: ContactInfo };
 
   return (
     <div id="contact">
