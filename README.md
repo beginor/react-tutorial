@@ -1,3 +1,5 @@
-# React with rollup and typescript
+# React Router Tutorial.
 
-React demo app with rollup and typescript.
+Follow Official React Router Tutorial with typescript.
+
+<https://reactrouter.com/en/main/start/tutorial>
