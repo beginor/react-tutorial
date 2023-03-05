@@ -1,15 +1,13 @@
-import { Form } from 'react-router-dom';
-import { ContactInfo } from '../contacts';
+import { Form, useLoaderData, LoaderFunctionArgs } from 'react-router-dom';
+import { ContactInfo, getContact } from '../contacts';
+
+export async function loader({ params, request, context}: LoaderFunctionArgs): Promise<{ contact: ContactInfo | null }> {
+    const contact = await getContact(params.contactId as string);
+    return { contact };
+}
 
 export default function Contact(): JSX.Element {
-  const contact: ContactInfo = {
-    first: 'Your',
-    last: 'Name',
-    avatar: 'https://placekitten.com/g/200/200',
-    twitter: 'your_handle',
-    notes: 'Some notes',
-    favorite: true,
-  };
+  const contact = useLoaderData() as ContactInfo;
 
   return (
     <div id="contact">
