@@ -1,6 +1,11 @@
-import { Link, Outlet, useLoaderData } from 'react-router-dom';
+import { Link, Outlet, useLoaderData, Form } from 'react-router-dom';
 
-import { ContactInfo, getContacts } from '../contacts';
+import { ContactInfo, getContacts, createContact } from '../contacts';
+
+export async function action(): Promise<{ contact: ContactInfo }> {
+    const contact = await createContact();
+    return { contact };
+}
 
 export async function loader(): Promise<{ contacts: ContactInfo[] }> {
     const contacts = await getContacts();
@@ -32,9 +37,9 @@ export default function Root(): JSX.Element {
                 aria-live="polite"
               ></div>
             </form>
-            <form method="post">
+            <Form method="post">
               <button type="submit">New</button>
-            </form>
+            </Form>
           </div>
           <nav>
             {contacts.length > 0 ? (
