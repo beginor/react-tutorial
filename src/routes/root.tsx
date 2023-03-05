@@ -1,6 +1,14 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLoaderData } from 'react-router-dom';
+
+import { ContactInfo, getContacts } from '../contacts';
+
+export async function loader(): Promise<{ contacts: ContactInfo[] }> {
+    const contacts = await getContacts();
+    return { contacts };
+}
 
 export default function Root(): JSX.Element {
+    const { contacts } = useLoaderData() as { contacts: ContactInfo[] };
     return (
       <>
         <div id="sidebar">
@@ -29,14 +37,28 @@ export default function Root(): JSX.Element {
             </form>
           </div>
           <nav>
-            <ul>
-              <li>
-                <Link to={`/contacts/1`}>Your Name</Link>
-              </li>
-              <li>
-                <Link to={`/contacts/2`}>Your Friend</Link>
-              </li>
-            </ul>
+            {contacts.length > 0 ? (
+              <ul>
+                {contacts.map(contact => (
+                  <li key={contact.id}>
+                    <Link to={`/contacts/${contact.id}`}>
+                      {contact.first || contact.last ? (
+                        <>
+                          {contact.first} {contact.last}
+                        </>
+                      ) : (
+                        <i>No name</i>
+                      )}{' '}
+                      {contact.favorite && <span>★</span>}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                <i>No contacts</i>
+              </p>
+            )}
           </nav>
         </div>
         <div id="detail">
