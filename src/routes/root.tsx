@@ -49,7 +49,10 @@ export default function Root(): JSX.Element {
                 name="q"
                 defaultValue={q as string}
                 ref={inputRef}
-                onChange={(e) => submit(e.currentTarget.form)}
+                onChange={(e) => {
+                    const isFirstSearch = q == null;
+                    submit(e.currentTarget.form, { replace: !isFirstSearch });
+                }}
               />
               <div
                 id="search-spinner"
