@@ -1,9 +1,18 @@
-import { Form, useLoaderData, LoaderFunctionArgs } from 'react-router-dom';
-import { ContactInfo, getContact } from '../contacts';
+import {
+    Form, useLoaderData, LoaderFunctionArgs, useFetcher, ActionFunctionArgs
+} from 'react-router-dom';
+import { ContactInfo, getContact, updateContact } from '../contacts';
 
-export async function loader({ params, request, context}: LoaderFunctionArgs): Promise<{ contact: ContactInfo | null }> {
+export async function loader({ params, request, context}: LoaderFunctionArgs): Promise<{ contact: ContactInfo | null }> { // eslint-disable-line max-len
     const contact = await getContact(params.contactId as string);
     return { contact };
+}
+
+export async function action({ request, params }: ActionFunctionArgs ) {
+    const formData = await request.formData();
+    return updateContact(params.contactId as string, {
+        favorite: formData.get('favorite') === 'true',
+    });
 }
 
 export default function Contact(): JSX.Element {
@@ -69,21 +78,22 @@ export default function Contact(): JSX.Element {
 }
 
 function Favorite({ contact }: { contact: ContactInfo }) {
-  // yes, this is a `let` for later
-  const favorite = contact.favorite;
-  return (
-    <Form method="post">
-      <button
-        name="favorite"
-        value={favorite ? 'false' : 'true'}
-        aria-label={
-          favorite
-            ? 'Remove from favorites'
-            : 'Add to favorites'
-        }
-      >
-        {favorite ? '★' : '☆'}
-      </button>
-    </Form>
-  );
+    const fetcher = useFetcher();
+    let favorite = contact.favorite;
+
+    return (
+      <fetcher.Form method="post">
+        <button
+          name="favorite"
+          value={favorite ? 'false' : 'true'}
+          aria-label={
+            favorite
+              ? 'Remove from favorites'
+              : 'Add to favorites'
+          }
+          >
+            {favorite ? '★' : '☆'}
+          </button>
+        </fetcher.Form>
+      );
 }
