@@ -6,4 +6,5 @@ const options = createOptions(
   ],
   './dist/'
 );
+options.packages = '';
 buildOrWatch(options);
