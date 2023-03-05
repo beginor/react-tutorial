@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import {
     Outlet, useLoaderData, Form, redirect, NavLink, useNavigation,
-    LoaderFunctionArgs
+    LoaderFunctionArgs, useSubmit
  } from 'react-router-dom';
 
 import { ContactInfo, getContacts, createContact } from '../contacts';
@@ -21,6 +21,7 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<{ contact
 export default function Root(): JSX.Element {
     const { contacts, q } = useLoaderData() as { contacts: ContactInfo[], q: string | null };
     const navigation = useNavigation();
+    const submit = useSubmit();
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +46,7 @@ export default function Root(): JSX.Element {
                 name="q"
                 defaultValue={q as string}
                 ref={inputRef}
+                onChange={(e) => submit(e.currentTarget.form)}
               />
               <div
                 id="search-spinner"
