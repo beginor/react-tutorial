@@ -5,6 +5,12 @@ import { ContactInfo, getContact, updateContact } from '../contacts';
 
 export async function loader({ params, request, context}: LoaderFunctionArgs): Promise<{ contact: ContactInfo | null }> { // eslint-disable-line max-len
     const contact = await getContact(params.contactId as string);
+    if (!contact) {
+        throw new Response('', {
+            status: 404,
+            statusText: 'Not found'
+        });
+    }
     return { contact };
 }
 
