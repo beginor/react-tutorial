@@ -10,6 +10,6 @@ page.innerHTML = '';
 const root = createRoot(page);
 root.render(
     <StrictMode>
-      <App message='Hello, World!' />
+      <App />
     </StrictMode>
 );

@@ -1,10 +1,20 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import './app.css';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: (
+            <div>Hello world!</div>
+        )
+    }
+]);
 
 export default function App(props: AppProps): JSX.Element {
     return (
       <div className='page-wrapper app'>
-        <h1>Hello, react!</h1>
-        <p>{props.message}</p>
+        <RouterProvider router={router} />
       </div>
     );
 }
