@@ -11,7 +11,7 @@ import EditContact, { action as editAction } from './routes/contact/edit';
 import { action as destroyAction } from './routes/contact/delete';
 import { action as favoriteAction } from './controls/favorite';
 
-import ErrorPage from './error-page';
+import ErrorPage from './routes/error';
 
 const router = createBrowserRouter([
     {
