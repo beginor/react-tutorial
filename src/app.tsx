@@ -2,13 +2,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Root, {
     loader as rootLoader, action as rootAction
-} from './routes/root';
-import Index from './routes/index';
+} from './routes/contact/list';
+import Index from './routes/contact/index';
 import Contact, {
     loader as contactLoader
-} from './routes/contact';
-import EditContact, { action as editAction } from './routes/edit';
-import { action as destroyAction } from './routes/destroy';
+} from './routes/contact/details';
+import EditContact, { action as editAction } from './routes/contact/edit';
+import { action as destroyAction } from './routes/contact/delete';
 import { action as favoriteAction } from './controls/favorite';
 
 import ErrorPage from './error-page';

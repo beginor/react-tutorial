@@ -3,7 +3,7 @@ import {
     Form, useLoaderData, redirect, ActionFunctionArgs, useNavigate
 } from 'react-router-dom';
 
-import { ContactModel, updateContact } from '../contacts.service';
+import { ContactModel, updateContact } from './contacts.service';
 
 export async function action(
     { request, params }: ActionFunctionArgs

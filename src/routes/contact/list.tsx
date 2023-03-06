@@ -4,9 +4,9 @@ import {
     LoaderFunctionArgs, useSubmit
  } from 'react-router-dom';
 
- import ContactDisplayName from '../controls/contact-display-name';
+ import ContactDisplayName from '../../controls/contact-display-name';
 
-import { ContactModel, getContacts, createContact } from '../contacts.service';
+import { ContactModel, getContacts, createContact } from './contacts.service';
 
 export async function action(): Promise<Response> {
     const contact = await createContact();
