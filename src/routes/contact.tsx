@@ -6,11 +6,11 @@ import {
 import ContactDisplayName from '../controls/contact-display-name';
 import Favorite from '../controls/favorite';
 
-import { ContactInfo, getContact, updateContact } from '../contacts.service';
+import { ContactModel, getContact, updateContact } from '../contacts.service';
 
 export async function loader(
     { params, request, context }: LoaderFunctionArgs
-): Promise<{ contact: ContactInfo | null }> {
+): Promise<LoaderDataType> {
     const contact = await getContact(params.contactId as string);
     if (!contact) {
         throw new Response('', {
@@ -18,11 +18,15 @@ export async function loader(
             statusText: 'Not found'
         });
     }
-    return { contact };
+    return { model: contact };
+}
+
+export interface LoaderDataType {
+    model: ContactModel;
 }
 
 export default function Contact(): JSX.Element {
-    const { contact } = useLoaderData() as { contact: ContactInfo };
+    const { model } = useLoaderData() as LoaderDataType;
 
     const confirmDelete = useCallback((evt: FormEvent<HTMLFormElement>) => {
         if (!confirm('Please confirm you want to delete this record.')) {
@@ -33,24 +37,24 @@ export default function Contact(): JSX.Element {
   return (
     <div id="contact">
       <div>
-        <img key={contact.avatar} src={contact.avatar } />
+        <img key={model.avatar} src={model.avatar } />
       </div>
 
       <div>
         <h1>
-           <ContactDisplayName contact={contact} />
-           <Favorite contact={contact} />
+           <ContactDisplayName contact={model} />
+           <Favorite contact={model} />
         </h1>
 
-        {contact.twitter && (
+        {model.twitter && (
           <p>
-            <a target="_blank" href={`https://twitter.com/${contact.twitter}`}>
-              {contact.twitter}
+            <a target="_blank" href={`https://twitter.com/${model.twitter}`}>
+              {model.twitter}
             </a>
           </p>
         )}
 
-        {contact.notes && <p>{contact.notes}</p>}
+        {model.notes && <p>{model.notes}</p>}
 
         <div>
           <Form action="edit">

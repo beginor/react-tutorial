@@ -1,4 +1,4 @@
-import { ContactInfo } from 'src/contacts.service';
+import { ContactModel } from 'src/contacts.service';
 
 export default function({ contact }: Props): JSX.Element {
     if (contact.first || contact.last) {
@@ -8,5 +8,5 @@ export default function({ contact }: Props): JSX.Element {
 }
 
 export interface Props {
-    contact: ContactInfo;
+    contact: ContactModel;
 }

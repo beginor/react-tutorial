@@ -6,7 +6,7 @@ import {
 
  import ContactDisplayName from '../controls/contact-display-name';
 
-import { ContactInfo, getContacts, createContact } from '../contacts.service';
+import { ContactModel, getContacts, createContact } from '../contacts.service';
 
 export async function action(): Promise<Response> {
     const contact = await createContact();
@@ -15,7 +15,7 @@ export async function action(): Promise<Response> {
 
 export async function loader(
     { request }: LoaderFunctionArgs
-): Promise<{ contacts: ContactInfo[], q: string | null }> {
+): Promise<{ contacts: ContactModel[], q: string | null }> {
     const url = new URL(request.url);
     const q = url.searchParams.get('q');
     const contacts = await getContacts(q as string);
@@ -23,7 +23,7 @@ export async function loader(
 }
 
 export default function Root(): JSX.Element {
-    const { contacts, q } = useLoaderData() as { contacts: ContactInfo[], q: string | null };
+    const { contacts, q } = useLoaderData() as { contacts: ContactModel[], q: string | null };
     const navigation = useNavigation();
     const submit = useSubmit();
 

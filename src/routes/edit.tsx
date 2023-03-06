@@ -3,7 +3,7 @@ import {
     Form, useLoaderData, redirect, ActionFunctionArgs, useNavigate
 } from 'react-router-dom';
 
-import { ContactInfo, updateContact } from '../contacts.service';
+import { ContactModel, updateContact } from '../contacts.service';
 
 export async function action(
     { request, params }: ActionFunctionArgs
@@ -18,7 +18,7 @@ export async function action(
 }
 
 export default function EditContact(): JSX.Element {
-  const { contact } = useLoaderData() as { contact: ContactInfo };
+  const { contact } = useLoaderData() as { contact: ContactModel };
   const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 

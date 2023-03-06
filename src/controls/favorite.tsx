@@ -1,17 +1,17 @@
 import { ActionFunctionArgs, useFetcher } from 'react-router-dom';
 
-import { ContactInfo, updateContact } from '../contacts.service';
+import { ContactModel, updateContact } from '../contacts.service';
 
 export async function action(
     { request, params }: ActionFunctionArgs
-): Promise<ContactInfo> {
+): Promise<ContactModel> {
     const formData = await request.formData();
     return updateContact(params.contactId as string, {
         favorite: formData.get('favorite') === 'true',
     });
 }
 
-export default function({ contact }: { contact: ContactInfo }): JSX.Element {
+export default function({ contact }: { contact: ContactModel }): JSX.Element {
     const fetcher = useFetcher();
     let favorite = contact.favorite;
 
