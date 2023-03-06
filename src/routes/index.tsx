@@ -3,7 +3,7 @@ export default function Index(): JSX.Element {
       <p id="zero-state">
         This is a demo for React Router.
         <br />
-        Check out{" "}
+        Check out{' '}
         <a href="https://reactrouter.com">
           the docs at reactrouter.com
         </a>

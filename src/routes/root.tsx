@@ -4,6 +4,8 @@ import {
     LoaderFunctionArgs, useSubmit
  } from 'react-router-dom';
 
+ import ContactDisplayName from '../controls/contact-display-name';
+
 import { ContactInfo, getContacts, createContact } from '../contacts';
 
 export async function action(): Promise<Response> {
@@ -11,7 +13,9 @@ export async function action(): Promise<Response> {
     return redirect(`/contacts/${contact.id}/edit`);
 }
 
-export async function loader({ request }: LoaderFunctionArgs): Promise<{ contacts: ContactInfo[], q: string | null }> { // eslint-disable-line max-len
+export async function loader(
+    { request }: LoaderFunctionArgs
+): Promise<{ contacts: ContactInfo[], q: string | null }> {
     const url = new URL(request.url);
     const q = url.searchParams.get('q');
     const contacts = await getContacts(q as string);
@@ -25,7 +29,9 @@ export default function Root(): JSX.Element {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const searching = navigation.location && new URLSearchParams(navigation.location.search).has('1');
+    const searching = navigation.location && new URLSearchParams(
+        navigation.location.search
+    ).has('q');
 
     useEffect(() => {
         if (!inputRef.current) {
@@ -40,29 +46,17 @@ export default function Root(): JSX.Element {
           <h1>React Router Contacts</h1>
           <div>
             <Form id="search-form" role="search">
-              <input
-                id="q"
-                className={searching ? 'loading' : ''}
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                name="q"
-                defaultValue={q as string}
+              <input id="q" className={searching ? 'loading' : ''}
+                aria-label="Search contacts" placeholder="Search"
+                type="search" name="q" defaultValue={q as string}
                 ref={inputRef}
                 onChange={(e) => {
                     const isFirstSearch = q == null;
                     submit(e.currentTarget.form, { replace: !isFirstSearch });
                 }}
               />
-              <div
-                id="search-spinner"
-                aria-hidden
-                hidden={!searching}
-              />
-              <div
-                className="sr-only"
-                aria-live="polite"
-              ></div>
+              <div id="search-spinner" aria-hidden hidden={!searching} />
+              <div className="sr-only" aria-live="polite"></div>
             </Form>
             <Form method="post">
               <button type="submit">New</button>
@@ -76,13 +70,8 @@ export default function Root(): JSX.Element {
                     <NavLink to={`/contacts/${contact.id}`}
                       className={({isActive, isPending}) =>
                         isActive ? 'active' : isPending ? 'pending' : '' }>
-                      {contact.first || contact.last ? (
-                        <>
-                          {contact.first} {contact.last}
-                        </>
-                      ) : (
-                        <i>No name</i>
-                      )}{' '}
+                      <ContactDisplayName contact={contact} />
+                      {' '}
                       {contact.favorite && <span>★</span>}
                     </NavLink>
                   </li>
@@ -95,8 +84,8 @@ export default function Root(): JSX.Element {
             )}
           </nav>
         </div>
-        <div id="detail"
-          className={navigation.state === 'loading' ? 'loading' : ''}>
+        <div className={navigation.state === 'loading' ? 'loading' : ''}
+          id="detail" >
           <Outlet />
         </div>
       </>

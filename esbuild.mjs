@@ -7,4 +7,6 @@ const options = createOptions(
   './dist/'
 );
 options.packages = '';
+options.external = ['react*']
+
 buildOrWatch(options);
