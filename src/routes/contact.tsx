@@ -6,7 +6,7 @@ import {
 import ContactDisplayName from '../controls/contact-display-name';
 import Favorite from '../controls/favorite';
 
-import { ContactInfo, getContact, updateContact } from '../contacts';
+import { ContactInfo, getContact, updateContact } from '../contacts.service';
 
 export async function loader(
     { params, request, context }: LoaderFunctionArgs

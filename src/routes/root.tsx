@@ -6,7 +6,7 @@ import {
 
  import ContactDisplayName from '../controls/contact-display-name';
 
-import { ContactInfo, getContacts, createContact } from '../contacts';
+import { ContactInfo, getContacts, createContact } from '../contacts.service';
 
 export async function action(): Promise<Response> {
     const contact = await createContact();

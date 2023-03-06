@@ -1,6 +1,6 @@
 import { useFetcher } from 'react-router-dom';
 
-import { ContactInfo } from '../contacts';
+import { ContactInfo } from '../contacts.service';
 
 export default function({ contact }: { contact: ContactInfo }): JSX.Element {
     const fetcher = useFetcher();

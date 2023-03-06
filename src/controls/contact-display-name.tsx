@@ -1,4 +1,4 @@
-import { ContactInfo } from 'src/contacts';
+import { ContactInfo } from 'src/contacts.service';
 
 export default function({ contact }: Props): JSX.Element {
     if (contact.first || contact.last) {
