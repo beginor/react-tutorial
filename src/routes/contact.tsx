@@ -21,15 +21,6 @@ export async function loader(
     return { contact };
 }
 
-export async function action(
-    { request, params }: ActionFunctionArgs
-): Promise<ContactInfo> {
-    const formData = await request.formData();
-    return updateContact(params.contactId as string, {
-        favorite: formData.get('favorite') === 'true',
-    });
-}
-
 export default function Contact(): JSX.Element {
     const { contact } = useLoaderData() as { contact: ContactInfo };
 

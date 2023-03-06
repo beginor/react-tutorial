@@ -5,11 +5,11 @@ import Root, {
 } from './routes/root';
 import Index from './routes/index';
 import Contact, {
-    loader as contactLoader,
-    action as contactAction
+    loader as contactLoader
 } from './routes/contact';
 import EditContact, { action as editAction } from './routes/edit';
 import { action as destroyAction } from './routes/destroy';
+import { action as favoriteAction } from './controls/favorite';
 
 import ErrorPage from './error-page';
 
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
                         path: 'contacts/:contactId',
                         element: <Contact />,
                         loader: contactLoader,
-                        action: contactAction,
+                        action: favoriteAction,
                     },
                     {
                         path: 'contacts/:contactId/edit',
