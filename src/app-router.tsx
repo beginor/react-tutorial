@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, LoaderFunction, ActionFunction } from 'react-router-dom';
 
 import Root, {
     loader as rootLoader, action as rootAction

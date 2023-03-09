@@ -1,6 +1,8 @@
 import { ActionFunctionArgs, useFetcher } from 'react-router-dom';
 
-import { ContactModel, updateContact } from '../routes/contact/contacts.service';
+import {
+    ContactModel, updateContact
+} from '../routes/contact/contacts.service';
 
 export async function action(
     { request, params }: ActionFunctionArgs
@@ -23,8 +25,8 @@ export default function({ contact }: { contact: ContactModel }): JSX.Element {
       <fetcher.Form method="post">
         <button name="favorite" value={favorite ? 'false' : 'true'}
           aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}>
-            {favorite ? '★' : '☆'}
-          </button>
+          {favorite ? '★' : '☆'}
+        </button>
       </fetcher.Form>
     );
 }
