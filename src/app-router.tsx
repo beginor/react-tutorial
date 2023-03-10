@@ -9,7 +9,7 @@ import Contact, {
 } from './routes/contact/details';
 import EditContact, { action as editAction } from './routes/contact/edit';
 import { action as destroyAction } from './routes/contact/delete';
-import { action as favoriteAction } from './controls/favorite';
+import { action as favoriteAction } from './routes/contact/controls/favorite';
 
 import ErrorPage from './routes/error';
 

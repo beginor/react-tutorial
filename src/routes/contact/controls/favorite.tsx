@@ -2,7 +2,7 @@ import { ActionFunctionArgs, useFetcher } from 'react-router-dom';
 
 import {
     ContactModel, updateContact
-} from '../routes/contact/contacts.service';
+} from '../contacts.service';
 
 export async function action(
     { request, params }: ActionFunctionArgs
