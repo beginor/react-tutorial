@@ -3,8 +3,8 @@ import {
     Form, useLoaderData, LoaderFunctionArgs, useFetcher, ActionFunctionArgs
 } from 'react-router-dom';
 
-import ContactDisplayName from '../../controls/contact-display-name';
-import Favorite from '../../controls/favorite';
+import ContactDisplayName from './controls/contact-display-name';
+import Favorite from './controls/favorite';
 
 import { ContactModel, getContact, updateContact } from './contacts.service';
 
